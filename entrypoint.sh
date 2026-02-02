@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Make sure DSN is set
+# Ensure DSN is set
 if [ -z "$DSN" ]; then
   echo "DSN environment variable is not set!"
   exit 1

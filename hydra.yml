@@ -1,0 +1,45 @@
+# dsn: ${DSN}
+
+# serve:
+#   public:
+#     port: 4444
+#   admin:
+#     port: 4445
+
+# urls:
+#   self:
+#     issuer: http://localhost:4444
+#   login: http://localhost:3000/login   # for now, can be a mock endpoint
+#   consent: http://localhost:3000/consent
+
+# secrets:
+#   system:
+#     - ${SECRETS_SYSTEM}
+
+# oauth2:
+#   expose_internal_errors: true
+
+
+dsn: ${DSN}
+
+serve:
+  public:
+    port: 4444
+  admin:
+    port: 4445
+
+urls:
+  self:
+    issuer: https://hydra-production-1e85.up.railway.app
+  login: https://hydra-production-1e85.up.railway.app/login
+  consent: https://hydra-production-1e85.up.railway.app/consent
+
+
+
+secrets:
+  system:
+    - ${SECRETS_SYSTEM}
+
+oauth2:
+  expose_internal_errors: false
+

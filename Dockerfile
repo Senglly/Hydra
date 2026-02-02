@@ -3,8 +3,9 @@ FROM oryd/hydra:v2.2.0
 # Copy Hydra config
 COPY hydra.yml /etc/config/hydra.yml
 
-# Run migrations first
-ENTRYPOINT ["hydra", "migrate", "sql", "--yes", "--config", "/etc/config/hydra.yml"]
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Start Hydra server after migrations
-CMD ["serve", "all", "--config", "/etc/config/hydra.yml"]
+# Run entrypoint via /bin/sh -c
+ENTRYPOINT ["/bin/sh", "-c", "/entrypoint.sh"]

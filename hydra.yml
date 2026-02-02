@@ -30,9 +30,9 @@ serve:
 
 urls:
   self:
-    issuer: https://hydra-production-1e85.up.railway.app
-  login: https://hydra-production-1e85.up.railway.app/login
-  consent: https://hydra-production-1e85.up.railway.app/consent
+    issuer: https://${RAILWAY_PUBLIC_DOMAIN}
+  login: https://${RAILWAY_PUBLIC_DOMAIN}/login
+  consent: https://${RAILWAY_PUBLIC_DOMAIN}/consent
 
 
 

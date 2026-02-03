@@ -1,40 +1,18 @@
-# dsn: ${DSN}
-
-# serve:
-#   public:
-#     port: 4444
-#   admin:
-#     port: 4445
-
-# urls:
-#   self:
-#     issuer: http://localhost:4444
-#   login: http://localhost:3000/login   # for now, can be a mock endpoint
-#   consent: http://localhost:3000/consent
-
-# secrets:
-#   system:
-#     - ${SECRETS_SYSTEM}
-
-# oauth2:
-#   expose_internal_errors: true
-
-
 dsn: ${DSN}
 
 serve:
   public:
     port: 4444
+    host: 0.0.0.0  # Important for Railway
   admin:
     port: 4445
+    host: 0.0.0.0  # Important for Railway
 
 urls:
   self:
-    issuer: https://${RAILWAY_PUBLIC_DOMAIN}
-  login: https://${RAILWAY_PUBLIC_DOMAIN}/login
-  consent: https://${RAILWAY_PUBLIC_DOMAIN}/consent
-
-
+    issuer: https://${RAILWAY_PUBLIC_URL}
+  login: https://${RAILWAY_PUBLIC_URL}/login
+  consent: https://${RAILWAY_PUBLIC_URL}/consent
 
 secrets:
   system:
@@ -43,3 +21,5 @@ secrets:
 oauth2:
   expose_internal_errors: false
 
+log:
+  level: debug  # Change to 'info' in production

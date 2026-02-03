@@ -1,4 +1,4 @@
-# dsn: ${DSN}  # REMOVE THIS LINE
+dsn: ${DSN}
 
 serve:
   public:

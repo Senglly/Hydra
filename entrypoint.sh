@@ -13,10 +13,10 @@ if [ -z "$DSN" ]; then
   exit 1
 fi
 
-# Run migrations with explicit --dsn flag
+# Run migrations - DSN as positional argument
 echo "Running database migrations..."
-hydra migrate sql --dsn "$DSN" --yes
+hydra migrate sql "$DSN" --yes
 
-# Start Hydra server with explicit --dsn flag
+# Start Hydra server - use -e flag to read DSN from environment
 echo "Starting Hydra server..."
-exec hydra serve all --dsn "$DSN" --config /etc/config/hydra.yml
+exec hydra serve all -e --config /etc/config/hydra.yml

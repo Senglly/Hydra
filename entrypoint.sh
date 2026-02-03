@@ -1,21 +1,37 @@
 #!/bin/sh
 set -e
 
-# Debug info
 echo "Starting Hydra..."
-echo "DSN is set: $([ -n "$DSN" ] && echo 'yes' || echo 'no')"
-echo "RAILWAY_PUBLIC_DOMAIN: ${RAILWAY_PUBLIC_DOMAIN}"
 
-# Ensure DSN is set
+# Ensure required environment variables are set
 if [ -z "$DSN" ]; then
   echo "ERROR: DSN environment variable is not set!"
   exit 1
 fi
 
-# Run migrations - DSN as positional argument
+if [ -z "$RAILWAY_STATIC_URL" ]; then
+  echo "ERROR: RAILWAY_STATIC_URL is not set!"
+  exit 1
+fi
+
+if [ -z "$SECRETS_SYSTEM" ]; then
+  echo "ERROR: SECRETS_SYSTEM is not set!"
+  exit 1
+fi
+
+# Expand environment variables in the config file
+echo "Expanding environment variables in config..."
+envsubst < /etc/config/hydra.yml > /tmp/hydra.yml
+
+# Debug: Show the expanded config (optional)
+echo "=== Expanded Config ==="
+cat /tmp/hydra.yml
+echo "======================="
+
+# Run migrations
 echo "Running database migrations..."
 hydra migrate sql "$DSN" --yes
 
-# Start Hydra server - config file will read ${DSN} from environment
+# Start Hydra server with expanded config
 echo "Starting Hydra server..."
-exec hydra serve all --config /etc/config/hydra.yml
+exec hydra serve all --config /tmp/hydra.yml

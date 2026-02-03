@@ -1,18 +1,18 @@
-dsn: ${DSN}
+# dsn: ${DSN}  # REMOVE THIS LINE
 
 serve:
   public:
     port: 4444
-    host: 0.0.0.0  # Important for Railway
+    host: 0.0.0.0
   admin:
     port: 4445
-    host: 0.0.0.0  # Important for Railway
+    host: 0.0.0.0
 
 urls:
   self:
-    issuer: https://${RAILWAY_PUBLIC_URL}
-  login: https://${RAILWAY_PUBLIC_URL}/login
-  consent: https://${RAILWAY_PUBLIC_URL}/consent
+    issuer: https://${RAILWAY_STATIC_URL}
+  login: https://${RAILWAY_STATIC_URL}/login
+  consent: https://${RAILWAY_STATIC_URL}/consent
 
 secrets:
   system:
@@ -22,4 +22,4 @@ oauth2:
   expose_internal_errors: false
 
 log:
-  level: debug  # Change to 'info' in production
+  level: debug

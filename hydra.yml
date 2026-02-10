@@ -11,9 +11,8 @@ serve:
 urls:
   self:
     issuer: https://${RAILWAY_STATIC_URL}
-  login: https://hydra-login-consent-production.up.railway.app/login
-  consent: https://hydra-login-consent-production.up.railway.app/consent
-
+  login: https://${RAILWAY_STATIC_URL}
+  consent: https://${RAILWAY_STATIC_URL}
 secrets:
   system:
     - ${SECRETS_SYSTEM}

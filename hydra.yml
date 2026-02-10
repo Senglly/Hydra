@@ -10,9 +10,9 @@ serve:
 
 urls:
   self:
-    issuer: https://${RAILWAY_PUBLIC_DOMAIN}
-  login: https://${RAILWAY_PUBLIC_DOMAIN}
-  consent: https://${RAILWAY_PUBLIC_DOMAIN}
+    issuer: https://${RAILWAY_STATIC_URL}
+  login: https://${RAILWAY_STATIC_URL}
+  consent: https://${RAILWAY_STATIC_URL}
 secrets:
   system:
     - ${SECRETS_SYSTEM}

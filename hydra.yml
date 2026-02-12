@@ -30,7 +30,7 @@ serve:
 
 urls:
   self:
-    issuer: https://${RAILWAY_STATIC_URL}
+    issuer: https://hydra-production-6c25.up.railway.app/
   login: https://gateway-production-7363.up.railway.app/login
   consent: https://gateway-production-7363.up.railway.app/consent
   logout: https://gateway-production-7363.up.railway.app/logout

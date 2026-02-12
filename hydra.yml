@@ -31,10 +31,10 @@ serve:
 urls:
   self:
     issuer: https://${RAILWAY_STATIC_URL}
-  login: https://gateway-production-7363.up.railway.app/auth/login
-  consent: https://gateway-production-7363.up.railway.app/auth/consent
-  logout: https://gateway-production-7363.up.railway.app/auth/logout
-  error: https://gateway-production-7363.up.railway.app/auth/error
+  login: https://gateway-production-7363.up.railway.app/login
+  consent: https://gateway-production-7363.up.railway.app/consent
+  logout: https://gateway-production-7363.up.railway.app/logout
+  error: https://gateway-production-7363.up.railway.app/error
   post_logout_callback: https://gateway-production-7363.up.railway.app  # ← Add this
 
 secrets:

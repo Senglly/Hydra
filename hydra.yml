@@ -8,7 +8,6 @@ serve:
       enabled: true
       allowed_origins:
         - https://gateway-production-7363.up.railway.app
-        - ${CORS_ALLOWED_ORIGIN}  # Add this for flexibility
       allowed_methods:
         - POST
         - GET

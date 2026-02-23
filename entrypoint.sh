@@ -9,11 +9,6 @@ if [ -z "$DSN" ]; then
   exit 1
 fi
 
-if [ -z "$RAILWAY_STATIC_URL" ]; then
-  echo "ERROR: RAILWAY_STATIC_URL is not set!"
-  exit 1
-fi
-
 if [ -z "$SECRETS_SYSTEM" ]; then
   echo "ERROR: SECRETS_SYSTEM is not set!"
   exit 1

@@ -29,7 +29,7 @@ serve:
 
 urls:
   self:
-    issuer: https://gateway-production-6cac.up.railway.app
+    issuer: https://hydra-production-a56f.up.railway.app/ 
   login:  https://gateway-production-6cac.up.railway.app/login
   consent:  https://gateway-production-6cac.up.railway.app/consent
   logout:  https://gateway-production-6cac.up.railway.app/logout

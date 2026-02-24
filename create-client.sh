@@ -3,7 +3,7 @@
 # Create an OAuth2 client in Hydra
 # Usage: ./create-client.sh
 
-HYDRA_ADMIN_URL="${HYDRA_ADMIN_URL:-http://localhost:4445}"
+HYDRA_ADMIN_URL="${HYDRA_ADMIN_URL:-http://hydra.railway.internal:4445}"
 
 echo "Creating OAuth2 client..."
 RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${HYDRA_ADMIN_URL}/admin/clients" \

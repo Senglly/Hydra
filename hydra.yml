@@ -7,7 +7,7 @@ serve:
     cors:
       enabled: true
       allowed_origins:
-        - https://gateway-testing-7bcc.up.railway.app
+        - ${HYDRA_CORS_ORIGIN}
       allowed_methods:
         - POST
         - GET
@@ -29,11 +29,11 @@ serve:
 
 urls:
   self:
-    issuer: https://hydra-testing.up.railway.app
-  login: https://gateway-testing-7bcc.up.railway.app/api/oauth2/login
-  consent: https://gateway-testing-7bcc.up.railway.app/api/oauth2/consent
-  logout: https://gateway-testing-7bcc.up.railway.app/api/oauth2/logout
-  error: https://gateway-testing-7bcc.up.railway.app/error
+    issuer: ${URLS_SELF_ISSUER}
+  login: ${URLS_LOGIN}
+  consent: ${URLS_CONSENT}
+  logout: ${URLS_LOGOUT}
+  error: ${URLS_ERROR}
 
 secrets:
   system:

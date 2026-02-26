@@ -14,6 +14,16 @@ if [ -z "$SECRETS_SYSTEM" ]; then
   exit 1
 fi
 
+if [ -z "$URLS_SELF_ISSUER" ]; then
+  echo "ERROR: URLS_SELF_ISSUER is not set!"
+  exit 1
+fi
+
+if [ -z "$URLS_LOGIN" ]; then
+  echo "ERROR: URLS_LOGIN is not set!"
+  exit 1
+fi
+
 # Expand environment variables in the config file
 echo "Expanding environment variables in config..."
 envsubst < /etc/config/hydra.yml > /tmp/hydra.yml

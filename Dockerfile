@@ -1,6 +1,6 @@
-FROM oryd/hydra:v2.2.0-alpine
+FROM oryd/hydra:v2-alpine
 
-# Install envsubst and curl (part of gettext package)
+# Install envsubst and curl
 USER root
 RUN apk add --no-cache gettext curl
 

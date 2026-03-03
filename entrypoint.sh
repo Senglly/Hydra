@@ -37,32 +37,9 @@ echo "======================="
 echo "Running database migrations..."
 hydra migrate sql "$DSN" --yes
 
-# Start Hydra in background
-echo "Starting Hydra server..."
-hydra serve all --config /tmp/hydra.yml &
-HYDRA_PID=$!
+# Hydra v2 should auto-generate keys on first use with correct SECRETS_SYSTEM
+echo "SECRETS_SYSTEM is set: ${SECRETS_SYSTEM:0:10}..."
+echo "Starting Hydra server - keys will auto-generate on first token request..."
 
-# Wait for Hydra admin API to be ready
-echo "Waiting for Hydra admin API..."
-sleep 15
-
-# Create signing keys via admin API
-echo "Creating ID token signing key..."
-curl -v -X POST http://localhost:4445/admin/keys/hydra.openid.id-token \
-  -H "Content-Type: application/json" \
-  -d '{
-    "alg": "RS256",
-    "use": "sig"
-  }' 2>&1 | head -30
-
-echo "Creating access token signing key..."
-curl -v -X POST http://localhost:4445/admin/keys/hydra.jwt.access-token \
-  -H "Content-Type: application/json" \
-  -d '{
-    "alg": "RS256",
-    "use": "sig"
-  }' 2>&1 | head -30
-
-echo "Keys created, Hydra running in foreground..."
-# Bring Hydra back to foreground
-wait $HYDRA_PID
+# Start Hydra server
+exec hydra serve all --config /tmp/hydra.yml

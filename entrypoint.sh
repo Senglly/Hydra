@@ -37,11 +37,31 @@ echo "======================="
 echo "Running database migrations..."
 hydra migrate sql "$DSN" --yes
 
-# Create signing keys if they don't exist
-echo "Ensuring signing keys exist..."
-hydra keys create hydra.openid.id-token --alg RS256 2>/dev/null || echo "ID token signing key already exists or created"
-hydra keys create hydra.jwt.access-token --alg RS256 2>/dev/null || echo "Access token signing key already exists or created"
-
-# Start Hydra server with expanded config
+# Start Hydra in background
 echo "Starting Hydra server..."
-exec hydra serve all --config /tmp/hydra.yml
+hydra serve all --config /tmp/hydra.yml &
+HYDRA_PID=$!
+
+# Wait for Hydra admin API to be ready
+echo "Waiting for Hydra admin API..."
+sleep 10
+
+# Create signing keys via admin API
+echo "Creating signing keys via admin API..."
+curl -X POST http://localhost:4445/admin/keys/hydra.openid.id-token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "alg": "RS256",
+    "use": "sig"
+  }' 2>/dev/null || echo "ID token key creation attempted"
+
+curl -X POST http://localhost:4445/admin/keys/hydra.jwt.access-token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "alg": "RS256",
+    "use": "sig"
+  }' 2>/dev/null || echo "Access token key creation attempted"
+
+echo "Keys created, Hydra running in foreground..."
+# Bring Hydra back to foreground
+wait $HYDRA_PID

@@ -53,6 +53,12 @@ oauth2:
     bcrypt:
       cost: 10
 
+strategies:
+  access_token: jwt
+  scope: exact
+  jwt:
+    enabled: true
+
 ttl:
   login_consent_request: 1h
   access_token: 1h

@@ -44,23 +44,24 @@ HYDRA_PID=$!
 
 # Wait for Hydra admin API to be ready
 echo "Waiting for Hydra admin API..."
-sleep 10
+sleep 15
 
 # Create signing keys via admin API
-echo "Creating signing keys via admin API..."
-curl -X POST http://localhost:4445/admin/keys/hydra.openid.id-token \
+echo "Creating ID token signing key..."
+curl -v -X POST http://localhost:4445/admin/keys/hydra.openid.id-token \
   -H "Content-Type: application/json" \
   -d '{
     "alg": "RS256",
     "use": "sig"
-  }' 2>/dev/null || echo "ID token key creation attempted"
+  }' 2>&1 | head -30
 
-curl -X POST http://localhost:4445/admin/keys/hydra.jwt.access-token \
+echo "Creating access token signing key..."
+curl -v -X POST http://localhost:4445/admin/keys/hydra.jwt.access-token \
   -H "Content-Type: application/json" \
   -d '{
     "alg": "RS256",
     "use": "sig"
-  }' 2>/dev/null || echo "Access token key creation attempted"
+  }' 2>&1 | head -30
 
 echo "Keys created, Hydra running in foreground..."
 # Bring Hydra back to foreground

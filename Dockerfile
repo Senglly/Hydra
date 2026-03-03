@@ -1,8 +1,8 @@
-FROM oryd/hydra:v2.2.0
+FROM oryd/hydra:v2.2.0-alpine
 
-# Install envsubst (part of gettext package)
+# Install envsubst and curl (part of gettext package)
 USER root
-RUN apk add --no-cache gettext
+RUN apk add --no-cache gettext curl
 
 # Copy Hydra config
 COPY hydra.yml /etc/config/hydra.yml

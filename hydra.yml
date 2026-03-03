@@ -48,7 +48,7 @@ oauth2:
     - email_verified
     - name
     - picture
-  hashers:  # ← Add for better security
+  hashers:
     algorithm: bcrypt
     bcrypt:
       cost: 10
@@ -56,8 +56,6 @@ oauth2:
 strategies:
   access_token: jwt
   scope: exact
-  jwt:
-    enabled: true
 
 ttl:
   login_consent_request: 1h

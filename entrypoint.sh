@@ -37,7 +37,11 @@ echo "======================="
 echo "Running database migrations..."
 hydra migrate sql "$DSN" --yes
 
-# Hydra v2 should auto-generate keys on first use with correct SECRETS_SYSTEM
+# Clear any existing signing keys that may be encrypted with old secrets
+echo "Clearing existing signing keys to force regeneration..."
+psql "$DSN" -c "DELETE FROM hydra_jwk WHERE sid IN ('hydra.openid.id-token', 'hydra.jwt.access-token');" 2>&1 || echo "No keys to clear or already cleared"
+
+# Hydra v2 will auto-generate keys on first use with correct SECRETS_SYSTEM
 echo "SECRETS_SYSTEM is set: ${SECRETS_SYSTEM:0:10}..."
 echo "Starting Hydra server - keys will auto-generate on first token request..."
 

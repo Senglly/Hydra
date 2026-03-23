@@ -19,7 +19,7 @@ curl -X POST "http://hydra.railway.internal:4445/admin/clients" \
     "response_types": ["code"],
     "redirect_uris": [
         "http://localhost:3000/callback",
-        "https://gateway-production-6cac.up.railway.app/callback"
+        "https://gateway-sengly-branch.up.railway.app/callback"
     ]
     "scope": "openid offline_access email profile",
     "token_endpoint_auth_method": "client_secret_post"

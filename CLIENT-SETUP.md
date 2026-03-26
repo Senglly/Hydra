@@ -4,6 +4,35 @@
 
 An OAuth2 client represents your application that will receive tokens from Hydra.
 
+## Required ID Token Claims for MAS
+
+For MAS upstream login, make sure Hydra `id_token` includes:
+
+- `email`
+- `username` (and optionally `preferred_username`)
+
+This is now handled by IAM consent acceptance (`/api/oauth2/consent`) and by Hydra config (`allowed_top_level_claims`).
+
+## Create MAS Client for Hydra
+
+Use the script in this folder:
+
+```bash
+cd /Users/sengly/Documents/Hydra/Hydra-test
+chmod +x create-mas-client.sh
+
+HYDRA_ADMIN_URL=http://hydra.railway.internal:4445 \
+MAS_CLIENT_ID=mas-upstream \
+MAS_CLIENT_NAME="Matrix Authentication Service" \
+MAS_REDIRECT_URI="https://YOUR_MAS_DOMAIN/upstream/callback/hydra" \
+./create-mas-client.sh
+```
+
+Notes:
+
+- `MAS_REDIRECT_URI` must be the exact callback URI expected by your MAS upstream OAuth2 provider config.
+- Save the output credentials and set them in MAS environment/config as Hydra upstream client credentials.
+
 ### Using the Hydra Admin API
 
 #### 1. Create a client via curl:
@@ -18,8 +47,7 @@ curl -X POST "http://hydra.railway.internal:4445/admin/clients" \
     "grant_types": ["authorization_code", "refresh_token"],
     "response_types": ["code"],
     "redirect_uris": [
-        "http://localhost:3000/callback",
-        "https://gateway-sengly-branch.up.railway.app/callback"
+      "https://gateway-sengly-branch.up.railway.app/auth/callback"
     ]
     "scope": "openid offline_access email profile",
     "token_endpoint_auth_method": "client_secret_post"
@@ -47,7 +75,7 @@ hydra clients create \
   --grant-types authorization_code,refresh_token \
   --response-types code \
   --scope openid,offline_access,email,profile \
-  --callbacks http://localhost:3000/callback
+  --callbacks https://gateway-sengly-branch.up.railway.app/auth/callback
 ```
 
 ## Client Configuration
@@ -79,7 +107,7 @@ hydra clients create \
 ### 1. Start the authorization flow:
 
 ```
-https://hydra-production-a56f.up.railway.app/oauth2/auth?client_id=my-app&response_type=code&scope=openid+email+profile&redirect_uri=http://localhost:3000/callback&state=random-state
+https://hydra-production-a56f.up.railway.app/oauth2/auth?client_id=my-app&response_type=code&scope=openid+email+profile&redirect_uri=https://gateway-sengly-branch.up.railway.app/auth/callback&state=random-state
 ```
 
 ### 2. Flow will:
@@ -96,7 +124,7 @@ curl -X POST "https://hydra-production-a56f.up.railway.app/oauth2/token" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "grant_type=authorization_code" \
   -d "code=YOUR_CODE_HERE" \
-  -d "redirect_uri=http://localhost:3000/callback" \
+  -d "redirect_uri=https://gateway-sengly-branch.up.railway.app/auth/callback" \
   -d "client_id=my-app" \
   -d "client_secret=my-super-secret-secret"
 ```

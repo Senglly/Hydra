@@ -46,6 +46,8 @@ oauth2:
   allowed_top_level_claims:
     - email
     - email_verified
+    - username
+    - preferred_username
     - name
     - picture
   hashers:

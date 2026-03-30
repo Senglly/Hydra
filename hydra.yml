@@ -14,7 +14,7 @@ serve:
         - PUT
         - PATCH
         - DELETE
-        - OPTIONS  # Add OPTIONS for CORS preflight
+        - OPTIONS # Add OPTIONS for CORS preflight
       allowed_headers:
         - Authorization
         - Content-Type
@@ -42,7 +42,7 @@ secrets:
     - ${SECRETS_COOKIE}
 
 oauth2:
-  expose_internal_errors: false
+  expose_internal_errors: true
   allowed_top_level_claims:
     - email
     - email_verified
@@ -66,13 +66,13 @@ ttl:
   id_token: 1h
   auth_code: 10m
 
-oidc:  # ← Add OIDC specific config
+oidc: # ← Add OIDC specific config
   subject_identifiers:
     supported_types:
       - public
       - pairwise
     pairwise:
-      salt: ${OIDC_SUBJECT_SALT}  # Add this env var
+      salt: ${OIDC_SUBJECT_SALT} # Add this env var
 
 log:
   level: debug

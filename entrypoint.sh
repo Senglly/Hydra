@@ -37,13 +37,17 @@ echo "======================="
 echo "Running database migrations..."
 hydra migrate sql "$DSN" --yes
 
-# Clear any existing signing keys that may be encrypted with old secrets
-echo "Clearing existing signing keys to force regeneration..."
-psql "$DSN" -c "DELETE FROM hydra_jwk WHERE sid IN ('hydra.openid.id-token', 'hydra.jwt.access-token');" 2>&1 || echo "No keys to clear or already cleared"
+# Only delete signing keys when explicitly requested (e.g. after rotating SECRETS_SYSTEM)
+# Deleting on every restart causes 503s while Hydra regenerates keys on first request
+if [ "${FORCE_KEY_ROTATION}" = "true" ]; then
+  echo "FORCE_KEY_ROTATION=true: clearing signing keys for regeneration..."
+  psql "$DSN" -c "DELETE FROM hydra_jwk WHERE sid IN ('hydra.openid.id-token', 'hydra.jwt.access-token');" 2>&1 || echo "No keys to clear or already cleared"
+else
+  echo "Skipping key rotation (set FORCE_KEY_ROTATION=true to force)."
+fi
 
-# Hydra v2 will auto-generate keys on first use with correct SECRETS_SYSTEM
 echo "SECRETS_SYSTEM is set: ${SECRETS_SYSTEM:0:10}..."
-echo "Starting Hydra server - keys will auto-generate on first token request..."
+echo "Starting Hydra server..."
 
 # Start Hydra server
 exec hydra serve all --config /tmp/hydra.yml

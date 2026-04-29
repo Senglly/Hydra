@@ -26,6 +26,8 @@ serve:
   admin:
     port: 4445
     host: 0.0.0.0
+  cookies:
+    same_site_mode: Lax
 
 urls:
   self:
